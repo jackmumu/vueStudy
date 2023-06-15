@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <li v-for="value in obj">{{value}}</li>
+            <hr>
+            <li v-for="value of arr">{{value}}</li>
+            <input v-model="a">
+            <button @click="objAdd">vue对象增加</button>
+            <button @click="arrAdd">vue数组增加</button>
+        </p>  
+    </div>
+    <script>
+       new Vue({
+            el: '#app',
+            data: {
+                a: '',
+                obj: {},
+                arr: []
+            },
+            methods: {
+                objAdd(){
+                    this.$set(this.obj,Object.keys(this.obj).length, this.a)
+                },
+                arrAdd(){
+                    this.$set(this.arr,Object.keys(this.arr).length, this.a)
+                },
+            }
+        })
+    </script>
+</body>
+</html>
