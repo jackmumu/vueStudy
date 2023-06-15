@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input v-model="message">
+        <button @click="emit">emit</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '',
+            },
+            methods: {
+                emit(){
+                    console.log(`将执行这俩个函数${this._events['event']}`)
+                    this.$emit('event', this.message)
+                }
+            },
+            created(){
+                this.$on('event', (message)=>{
+                    console.log(`$on1 ------${message}`)
+                })
+                console.log(`往_events 空数组增加${this._events['event']}`)
+                this.$on('event', (message)=>{
+                    console.log(`$on2 ------ ${message}`)
+                })
+                console.log(`往_events 数组增加${this._events['event'][1]}`)
+                console.log(`vue实例上已有${this._events['event']}`)
+            }
+        })
+    </script>
+</body>
+</html>
