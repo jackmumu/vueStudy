@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>{{num}}</p>
+        <button @click="add">增加</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                num: 0
+            },
+            methods: {
+                add(){
+                    this.$emit('add', () => {
+                        this.num++;
+                    })
+                }
+            },
+            created(){
+                this.$once('add',(fn) => {
+                    fn()
+                })
+            }
+        })
+    </script>
+</body>
+</html>
