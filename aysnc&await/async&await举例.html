@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      // 场景 小明玩游戏
+      // 通过第一关、第二关、共5关,失败就重新开始，直到成功.  
+      let count = 1;
+      async function text(flag){
+        function playGame(){
+            return new Promise((resolve)=>{
+                setTimeout(()=>{
+                    const flag = Math.random() > 0.5
+                    console.log(flag)
+                    if(flag){
+                        resolve()
+                    }else{
+                        console.log('闯关失败，重新开始')
+                        count = 1;
+                        text(true)
+                    }
+                }, 2000)
+            })
+        }
+        if(count == 6){
+            console.log('成功通过')
+            return;
+        }
+        if(flag){
+            await playGame()
+            console.log(`通过第${count}关`)
+            count ++;
+            text(true)
+        }
+      }
+      text(true)           
+    </script>
+</body>
+</html>
