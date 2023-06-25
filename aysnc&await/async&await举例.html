@@ -6,13 +6,17 @@
     <title>Document</title>
 </head>
 <body>
+    <p id="allCount"></p>
     <script>
       // 场景 小明玩游戏
       // 通过第一关、第二关、共5关,失败就重新开始，直到成功.  
       let count = 1;
+      let allCount = 0;
       async function text(flag){
         function playGame(){
             return new Promise((resolve)=>{
+                allCount ++;
+                document.getElementById('allCount').innerHTML = `闯关${allCount}次`;
                 setTimeout(()=>{
                     const flag = Math.random() > 0.5
                     console.log(flag)
@@ -28,6 +32,7 @@
         }
         if(count == 6){
             console.log('成功通过')
+            document.getElementById('allCount').innerHTML = `闯关${allCount}次通过`;
             return;
         }
         if(flag){

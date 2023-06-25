@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="alert">弹窗</button>
+        <button @click="alert2">弹窗2</button>
+    </div>
+    <script>
+        Vue.use({
+            install(){
+                console.log('安装这个插件');
+                Vue.prototype.$swAlert = function(){
+                    alert('使用插件')
+                }
+            }
+        })
+        Vue.use(function(){
+            Vue.prototype.$swAlert2 = function(){
+                alert('使用插件安装方式2')
+            }
+        })
+        new Vue({
+            el: '#app',
+            methods: {
+                alert(){
+                    this.$swAlert()
+                },
+                alert2(){
+                    this.$swAlert2()
+                }
+            }
+        })
+    </script>
+</body>
+</html>
