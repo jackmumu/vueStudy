@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p v-for="item2 of arr">{{item2}}</p>
+        <p v-for="item in obj">{{item}}</p>
+        <p>{{num}}</p>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                arr: [1,2,3],
+                obj: {
+                    a: 1
+                },
+                num: 1
+            }
+        })
+    </script>
+</body>
+</html>

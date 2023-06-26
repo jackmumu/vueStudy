@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <counter :num="num"></counter>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                num: 1 
+            },
+            components: {
+                counter: {
+                    props: {
+                        num: {
+                            type: Number,
+                            required: true
+                        }
+                    },
+                    data(){
+                        return {
+                            num2:this.num,
+                        }
+                    },
+                    methods: {
+                        add(){
+                            this.num2 ++;
+                        } 
+                    },
+                    template: "<div>{{num2}}<button @click='add'>增加</button></div>"
+                },
+              
+            }
+        })
+    </script>
+</body>
+</html>

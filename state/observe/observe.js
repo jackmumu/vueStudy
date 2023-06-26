@@ -1,3 +1,80 @@
+/**
+   * Define a reactive property on an Object.
+   * 定义一个响应式的属性
+   */
+function defineReactive(obj, key, val, customSetter, shallow, mock) {
+    var dep = new Dep();
+    var property = Object.getOwnPropertyDescriptor(obj, key);
+    if (property && property.configurable === false) {
+        return;
+    }
+    // cater for pre-defined getter/setters
+    var getter = property && property.get;
+    var setter = property && property.set;
+    if ((!getter || setter) &&
+        (val === NO_INIITIAL_VALUE || arguments.length === 2)) {
+        val = obj[key];
+    }
+    // 如果不是浅，则将
+    var childOb = !shallow && observe(val, false, mock);
+    Object.defineProperty(obj, key, {
+        enumerable: true,
+        configurable: true,
+        get: function reactiveGetter() {
+            var value = getter ? getter.call(obj) : val;
+            if (Dep.target) {
+                {
+                    dep.depend({
+                        target: obj,
+                        type: "get" /* TrackOpTypes.GET */,
+                        key: key
+                    });
+                }
+                if (childOb) {
+                    childOb.dep.depend();
+                    if (isArray(value)) {
+                        dependArray(value);
+                    }
+                }
+            }
+            return isRef(value) && !shallow ? value.value : value;
+        },
+        set: function reactiveSetter(newVal) {
+            var value = getter ? getter.call(obj) : val;
+            if (!hasChanged(value, newVal)) {
+                return;
+            }
+            if (customSetter) {
+                customSetter();
+            }
+            if (setter) {
+                setter.call(obj, newVal);
+            }
+            else if (getter) {
+                // #7981: for accessor properties without setter
+                return;
+            }
+            else if (!shallow && isRef(value) && !isRef(newVal)) {
+                value.value = newVal;
+                return;
+            }
+            else {
+                val = newVal;
+            }
+            childOb = !shallow && observe(newVal, false, mock);
+            {
+                dep.notify({
+                    type: "set" /* TriggerOpTypes.SET */,
+                    target: obj,
+                    key: key,
+                    newValue: newVal,
+                    oldValue: value
+                });
+            }
+        }
+    });
+    return dep;
+}
 function observe(value, shallow, ssrMockReactivity) {
     // __ob__是否已经做响应式的标志
     // value存在__ob__属性，则已经是响应式数据，直接返回

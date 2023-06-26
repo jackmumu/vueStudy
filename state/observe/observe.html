@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <abc :ccc="s"></abc>
+    </div>
+    <script>
+        window.vm = new Vue({
+            el: '#app',
+            data:{
+                arr : [1,3,4],
+                simpleObj: {
+                    a: 1,
+                    b: 2,
+                    c: 3
+                },
+                obj: {
+                    a: {
+                        a: 1
+                    },
+                    b: 2
+                },
+                s: 'props'
+            },
+            components: {
+                abc: {
+                    data: ()=>{
+                        return {
+                            cdd: 1
+                        }
+                    },
+                    props: {
+                        ccc: {
+                            type: String,
+                            required: false
+                        }
+                    },
+                    template: '<div>{{ccc}}{{cdd}}</div>'
+                }
+            },
+        })
+    </script>
+</body>
+</html>
