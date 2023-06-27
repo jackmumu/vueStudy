@@ -2,6 +2,7 @@ function Vue(options){
     this._init(options)
 }
 // 状态
+// 状态初始化顺序 prop > method > data > computed > watch
 function initState(vm) {
     var opts = vm.$options;
     // 处理组件的props
