@@ -6,7 +6,7 @@ function nextTick(cb, ctx) {
     callbacks.push(function () {
         if (cb) {
             try {
-                // 改变this指向
+                // 改变this指向vm
                 cb.call(ctx);
             }
             catch (e) {

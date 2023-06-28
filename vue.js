@@ -11859,7 +11859,7 @@
               if (config.performance && mark) {
                   mark('compile');
               }
-              var _a = compileToFunctions(template, {
+              var _a = compileToFunctions(template, { 
                   outputSourceRange: true,
                   shouldDecodeNewlines: shouldDecodeNewlines,
                   shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
