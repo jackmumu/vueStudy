@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="app">
-        <p>{{num}}</p>
+        <p>{{num}}</p>{{num2}}
         <button @click="add">增加</button>
     </div>
     <script>
@@ -16,12 +16,19 @@
             el: '#app',
             data: {
                 num: 1,
+                num2: 2
             },
             methods: {
                 add(){
                     this.num ++;
-                    console.log(this)
                 }
+            },
+            mounted(){
+                console.log(this)
+                // 组件对应的watcher 一个组件对应一个watcher
+                console.log(this._watcher)
+                // 组件上的deps数组，一个依赖对应一个dep
+                console.log(this._watcher.deps)
             }
         })
     </script>

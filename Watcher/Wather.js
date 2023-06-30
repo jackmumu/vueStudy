@@ -4,7 +4,7 @@
    * This is used for both the $watch() api and directives.
    * @internal
    * dep收集Watcher实例对象
-   * 依赖发生变化后，执行dep.notify()，通知更新所有收集在dep中的watcher
+   * 依赖发生变化后，执行dep.notify()，通知更新所有收集在deps中的watcher
    */
 var Watcher = /** @class */ (function () {
     function Watcher(vm, expOrFn, cb, options, isRenderWatcher) {
@@ -134,6 +134,7 @@ var Watcher = /** @class */ (function () {
             this.run();
         }
         else {
+            // 将自身watcher推进queue中，供nextTick微任务执行
             queueWatcher(this);
         }
     };
