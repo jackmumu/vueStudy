@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id='app'>
+        {{num}}
+        <input v-m:a='{
+            data: num,
+            callback: update
+        }'></input>  
+        <button @click='add'>add</button> 
+    </div>
+    <script>
+        Vue.directive('m', {
+            bind(){
+                const el = arguments[0];
+                let value = arguments[1].value.data
+                el.value = value;
+                el.oninput= (event)=>{
+                    arguments[1].value.callback(event.target.value);
+                }
+            },
+            update(){
+                const el = arguments[0];
+                const value = arguments[1].value.data
+                el.value = value;
+            }
+        })
+        new Vue({
+            el:'#app',
+            data: {
+                num: '1'
+            },
+            methods: {
+                add(){
+                    this.num++;
+                },
+                update(num){
+                    this.num = num
+                }
+            }
+        })
+    </script>
+</body>
+</html>

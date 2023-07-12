@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input v-num:a="num">
+        <button @click="add">add</button>
+    </input>
+    
+    </div>
+    <script>
+        Vue.directive('num', {
+            // 只调用一次，指令第一次绑定到元素时调用，可以做初始化设置
+            // 创建了dom，并没插入到父节点中
+            bind: function(){
+                // bind函数回调的参数长度 n= 5
+                const n = arguments.length;
+                const args = new Array(5);
+                // 指令绑定的dom,可以用来操作绑定的dom
+                args[0] = "指令绑定的dom,可以用来操作绑定的dom";
+                args[1] = "一个对象,name定义的指令名,value:指令绑定的值 v-num=2,即为2,oldValue指令绑定的前一个值,expression:将绑定的值以字符串形式返回,arg:传给指令的参数为a";
+                args[2]= '虚拟dom';
+                args[3] = '旧虚拟dom';
+                const m = new Map();
+                for(let i = 0;i<n;i++){
+                    m.set(args[i],arguments[i])
+                }
+                for(let item of m){
+                    console.log(`${item[0]}:`,item[1])
+                }
+                arguments[0].value = arguments[1].value;
+            },
+            inserted: (...rest)=>{
+                console.log(rest)
+            },
+            update: (...rest)=>{
+                rest[0].value = rest[1].value;
+                console.log(rest)
+            },
+            componentUpdated: (...rest)=>{
+                console.log(rest)
+            },
+            unbind:(...rest)=>{
+                console.log(rest)
+            },
+        })
+        let a = new Vue({
+            el:'#app',
+            methods:{
+                add(){
+                    this.num++
+                }
+            },
+            data: {
+                num: 2,
+            }
+        })
+        // console.log(a,Vue.prototype,Vue.directive)
+    </script>
+</body>
+</html>

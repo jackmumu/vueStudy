@@ -1,5 +1,6 @@
 var KeepAlive = {
     name: 'keep-alive',
+    // 抽象组件，不显示
     abstract: true,
     props: {
         include: patternTypes,
