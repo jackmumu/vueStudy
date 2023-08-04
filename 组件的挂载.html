@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head> 
+<body>
+    <div id="app"><div>222<div>44</div></div>{{message}}<abc></abc></div>
+    <script>
+        Vue.prototype.getView = function(o){
+            return [this.view()];
+        }
+        Vue.component('abc', {
+            data(){
+                return {
+                    a: '1'
+                }
+            },
+            render(){
+                let {_c,getView, _m, _v, _s} = this;
+                getView = getView.bind(this)
+                _c = _c.bind(this)
+                _m = _m.bind(this)
+                _v = _v.bind(this)
+                _s = _s.bind(this)
+                console.log(_c('div', {}, getView() ))
+                return _c('div',{attrs:{"id":"app"}},[_v(_s('11')),_v('ab'),_v('ab')])
+            },
+            methods: {
+                view(){
+                    return {
+                        tag: 'div',
+                        text: '3333',
+                    }
+                }
+            }
+            
+        })
+        let a = new Vue({
+            el: '#app',
+            data: {
+                message:'111',
+            },
+        })
+        console.log(a,Vue.prototype)
+    </script>
+</body>
+</html>
