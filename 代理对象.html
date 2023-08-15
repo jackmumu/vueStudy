@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function proxy(target, sourceKey, key){
+            const o = {
+                get: ()=> {
+                    return target[sourceKey][key]
+                },
+                set: (val)=> {
+                    target[sourceKey][key] = val
+                }
+            }
+            Object.defineProperty(target, key,o)
+        }
+        const o = {
+            _data: {
+                a: '3',
+                b: '4'
+            }
+        }
+        for(let item in o._data){
+            proxy(o, '_data', item )
+        }
+        window.o =o;
+        console.log(o)
+     
+    </script>
+</body>
+</html>

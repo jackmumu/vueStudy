@@ -7,7 +7,7 @@
     <script src="./vue.js"></script>
 </head> 
 <body>
-    <div id="app"><div>222<div>44</div></div>{{message}}<abc></abc></div>
+    <div id="app"><div>222<div>44</div></div>{{message}}<abc></abc><div id="a"></div></div>
     <script>
         Vue.prototype.getView = function(o){
             return [this.view()];
@@ -44,7 +44,17 @@
                 message:'111',
             },
         })
-        console.log(a,Vue.prototype)
+        class abcde extends Vue{
+           
+        }
+        new abcde({
+            el:'#a',
+            render(){
+                console.log('ss')
+                return this._c('div', {}, [{text: 'sss'}])
+            }
+        })
+        console.log(abcde,Vue.prototype)
     </script>
 </body>
 </html>
