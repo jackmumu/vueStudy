@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="./vue.js"></script>
 </head>
 <body>
+    <div id="app">{{a}}<button @click="add"></button></div>
     <script>
+        window.v= new Vue({
+            el: '#app',
+            data: {
+                a:1,
+                b:2,
+            },
+            methods: {
+                c: ()=>{},
+                add:function(){
+                    this.a++;
+                    this.$watch('a', ()=> {
+                        console.log('监听a发送变化')
+                    }, {
+                        immediate: true
+                    })
+                }
+            },
+            computed: {
+                d: function() {
+                    return this.a;
+                },
+                e: function(){
+                    return this.b
+                }
+            },
+            watch:{
+                a: [()=> {
+                    console.log(33)
+                }, ()=> {
+                    console.log(44)
+                }]
+            }
+        })
         function proxy(target, sourceKey, key){
             const o = {
                 get: ()=> {
@@ -18,18 +53,40 @@
             }
             Object.defineProperty(target, key,o)
         }
+        function bind$1(fn,vm){
+            return fn.bind(vm)
+        }
         const o = {
             _data: {
                 a: '3',
                 b: '4'
+            },
+            methods:{
+                c:function(){
+                    console.log('方法c')
+                },
+            },
+            computed: {
+                e: function(){
+                    return 1
+                }
             }
         }
         for(let item in o._data){
             proxy(o, '_data', item )
         }
+        const methods = o.methods
+        for(let item in methods){
+            console.log(methods[item], o)
+            o[item] = bind$1(methods[item], o)
+        }
+        for(let item in o.computed){
+            const get = typeof o.computed[item] === 'function' ? o.computed[item] : o.computed[item].get;
+            Object.defineProperty(o, item, {get:get})
+        }
         window.o =o;
         console.log(o)
-     
+        
     </script>
 </body>
 </html>
