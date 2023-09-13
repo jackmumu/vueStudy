@@ -6316,7 +6316,7 @@
   }
   function createElementNS(namespace, tagName) {
       return document.createElementNS(namespaceMap[namespace], tagName);
-  }
+  } 
   function createTextNode(text) {
       return document.createTextNode(text);
   }

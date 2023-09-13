@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+       const hexToRgba = (sHex) => {
+  // 十六进制颜色值的正则表达式
+  let reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{4}|[0-9a-fA-f]{6}|[0-9a-fA-f]{8})$/
+  /* 16进制颜色转为RGB格式 */
+  let sColor = sHex.toLowerCase()
+  if (sColor && reg.test(sColor)) {
+    if (sColor.length === 4 || sColor.length === 5) {
+      let sColorNew = '#'
+      for (let i = 1; i < sColor.length; i += 1) {
+        sColorNew += sColor.slice(i, i + 1).concat(sColor.slice(i, i + 1))
+      }
+      sColor = sColorNew
+    }
+    //  处理六位的颜色值
+    let sColorChange = []
+    for (let i = 1; i < 7; i += 2) {
+      sColorChange.push(parseInt('0x' + sColor.slice(i, i + 2)))
+    }
+    return 'rgb(' + sColorChange.join(',') + ')'
+  } else {
+    return sColor
+  }
+}
+console.log(hexToRgba('#333333'))
+    </script>
+</body>
+</html>

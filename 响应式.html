@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">{{num}}<button @click="add" class="111">增加</button><eaa :a="33"></eaa></div>
+    <script>
+        let v = new Vue({
+            el: '#app',
+            data:{
+                obj: {
+                    a: {
+                        b: '33'
+                    }
+                },
+                num:1
+            },
+            methods: {
+                add(){
+                    this.num++;
+                }
+            },
+            provide(){
+                return {
+                    'child': 'ch33ild'
+                }
+            },
+            components: { 
+                eaa: {
+                    data(){
+                        return {
+                            num:1
+                        }
+                    },
+                    props: {
+                        "a": "a"
+                    },
+                    template: '<div>3333{{child}}</div>',
+                    inject:['child'],
+                }
+            }
+        })
+        console.log(v)
+        window.v = v;
+    </script>
+    
+</body>
+</html>
